@@ -1,0 +1,54 @@
+ <!DOCTYPE html>
+<html>
+    <title>Test Timeframed Cytoscape</title>
+    <body>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <head>
+            <script type = "text/javascript" src = "js/jquery-3.4.0.min.js" ></script>
+            <script type = "text/javascript" src = "js/jquery-ui-1.12.1/jquery-ui.min.js" ></script>
+            <script type = "text/javascript" src = "js/cytoscape.min.js" ></script>
+            <script type = "text/javascript" src = "js/main.js" ></script>
+            <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.min.css">
+            <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.structure.min.css">
+            <link rel="stylesheet" href="js/jquery-ui-1.12.1/jquery-ui.theme.min.css">
+            <link rel="stylesheet" href="css/main.css">
+
+        </head>
+
+        <div id="main">
+            <p>
+                <label for="amount">Date:</label>
+                <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
+            </p>       
+            <div id="slider"></div>
+            <div id="cy"></div>
+        </div>
+
+        <script>
+            var aux = 0;
+            var dates = [];
+
+            var vertices = {};
+            var edges = {};
+
+            vertices[0] = new Vertex(0, "a");
+            vertices[1] = new Vertex(1, "b");
+            vertices[2] = new Vertex(2, "c");
+            edges[0] = new Edge(0, 1, '2019-01-01', '2019-01-31');
+            edges[1] = new Edge(0, 2, '2019-01-15', '2019-02-28');
+
+            for (var k in edges){
+                dates.push(edges[k].dtStart);
+                dates.push(edges[k].dtFinal);
+            }
+            
+            dates = dates.sort();
+            //console.log(dates);
+            var cy = startContainer('#cy', vertices, edges);
+            var update = updataDate("#amount", dates, edges);
+            var slider = startSlider("#slider", 0, dates.length - 1, 0, update);
+
+        </script>
+    </body>
+</html> 
